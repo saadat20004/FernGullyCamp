@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fern Gully Camp — Greenbank, Whidbey Island</title>
+<meta name="description" content="A 15-acre former horse farm turned Hipcamp in Greenbank, Washington. Seven wooded and open-field sites, a stargazing hammock circle, and berries by the trail.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+  :root{
+    --pine:#14231A;
+    --pine-deep:#0E1A12;
+    --fern:#3F5A34;
+    --fern-light:#5C7A4C;
+    --meadow:#A9C77C;
+    --parchment:#F3ECDA;
+    --parchment-dim:#E7DEC6;
+    --bark:#9C6B37;
+    --bark-deep:#7C5228;
+    --ink:#201B12;
+    --line: rgba(32,27,18,0.14);
+    --line-light: rgba(243,236,218,0.22);
+    --shadow: 0 24px 60px -20px rgba(14,26,18,0.45);
+    --ease: cubic-bezier(.22,.68,.14,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:'Karla', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:-0.01em;
+    line-height:1.08;
+  }
+  p{margin:0;}
+  .container{
+    width:min(1180px, 92%);
+    margin-inline:auto;
+  }
+  ::selection{ background:var(--meadow); color:var(--pine-deep); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- Trail nav (desktop) ---------- */
+  .trail-nav{
+    position:fixed;
+    top:50%;
+    right:28px;
+    transform:translateY(-50%);
+    z-index:60;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:22px;
+  }
+  .trail-nav::before{
+    content:"";
+    position:absolute;
+    right:5px;
+    top:6px;
+    bottom:6px;
+    width:1px;
+    background:var(--line-light);
+  }
+  .trail-nav button{
+    all:unset;
+    display:flex;
+    align-items:center;
+    flex-direction:row-reverse;
+    gap:12px;
+    cursor:pointer;
+    color:var(--parchment);
+    position:relative;
+  }
+  .trail-nav .dot{
+    width:11px; height:11px; border-radius:50%;
+    background:transparent;
+    border:1.5px solid rgba(243,236,218,0.55);
+    transition: background .35s var(--ease), border-color .35s var(--ease), transform .35s var(--ease);
+    flex-shrink:0;
+  }
+  .trail-nav .label{
+    font-family:'Karla',sans-serif;
+    font-size:12.5px;
+    letter-spacing:0.02em;
+    opacity:0;
+    transform:translateX(6px);
+    transition:opacity .3s var(--ease), transform .3s var(--ease);
+    white-space:nowrap;
+    background:rgba(14,26,18,0.001);
+  }
+  .trail-nav button:hover .label,
+  .trail-nav button.active .label{
+    opacity:1;
+    transform:translateX(0);
+  }
+  .trail-nav button.active .dot{
+    background:var(--meadow);
+    border-color:var(--meadow);
+    transform:scale(1.15);
+  }
+  .trail-nav.on-light button{ color:var(--ink); }
+  .trail-nav.on-light .dot{ border-color:rgba(32,27,18,0.4); }
+  .trail-nav.on-light::before{ background:var(--line); }
+  @media (max-width:980px){ .trail-nav{ display:none; } }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 0;
+    transition: background .4s var(--ease), padding .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .topbar .container{ display:flex; align-items:center; justify-content:space-between; }
+  .topbar.scrolled{
+    background:rgba(20,35,26,0.86);
+    backdrop-filter:blur(10px);
+    padding:14px 0;
+    box-shadow:0 8px 30px rgba(0,0,0,0.15);
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Fraunces', serif;
+    font-size:20px;
+    color:var(--parchment);
+    font-weight:500;
+  }
+  .brand i{ font-size:20px; color:var(--meadow); }
+  .topbar nav{ display:flex; gap:32px; }
+  .topbar nav a{
+    text-decoration:none;
+    color:var(--parchment);
+    font-size:14.5px;
+    position:relative;
+    padding-bottom:4px;
+    opacity:0.92;
+  }
+  .topbar nav a::after{
+    content:"";
+    position:absolute; left:0; right:100%; bottom:0; height:1px;
+    background:var(--meadow);
+    transition:right .35s var(--ease);
+  }
+  .topbar nav a:hover::after{ right:0; }
+  .topbar .cta-small{
+    background:var(--parchment);
+    color:var(--pine-deep);
+    border-radius:999px;
+    padding:10px 20px;
+    font-size:14px;
+    font-weight:600;
+    text-decoration:none;
+    transition: transform .3s var(--ease), background .3s var(--ease);
+    display:inline-block;
+  }
+  .topbar .cta-small:hover{ transform:translateY(-2px); background:var(--meadow); }
+  @media (max-width:820px){ .topbar nav{ display:none; } }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:flex-end;
+    overflow:hidden;
+    background:var(--pine-deep);
+  }
+  .hero-media{
+    position:absolute; inset:0;
+    background-image:url('https://hipcamp-res.cloudinary.com/images/f_auto,c_limit,w_3840,q_auto/v1564590978/campground-photos/w34osgiqo7ohyq7avuj3/fern-gully-camp-fern-gully-puget-sound.jpg');
+    background-size:cover;
+    background-position:center 40%;
+    transform:scale(1.08);
+    animation: heroZoom 12s var(--ease) forwards;
+  }
+  @keyframes heroZoom{ to{ transform:scale(1); } }
+  .hero-media::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(0deg, rgba(14,20,15,0.92) 5%, rgba(14,20,15,0.35) 48%, rgba(14,20,15,0.15) 75%);
+  }
+  .hero-content{
+    position:relative;
+    z-index:2;
+    padding-bottom:min(9vh, 92px);
+    padding-left:clamp(16px, 5vw, 64px);
+    width:100%;
+  }
+  @media (max-width:600px){ .hero-content{ padding-left:4px; } }
+  .hero-eyebrowline{
+    display:flex; align-items:center; gap:12px;
+    color:var(--meadow);
+    font-size:14.5px;
+    margin-bottom:22px;
+    opacity:0;
+    animation: riseIn .9s var(--ease) forwards;
+    animation-delay:.5s;
+  }
+  .hero-eyebrowline .rule{ width:34px; height:1px; background:var(--meadow); }
+  .hero h1{
+    color:var(--parchment);
+    font-size:clamp(3rem, 8vw, 6.4rem);
+    max-width:14ch;
+    opacity:0;
+    animation: riseIn 1.1s var(--ease) forwards;
+    animation-delay:.65s;
+  }
+  .hero h1 em{ font-style:italic; font-weight:400; color:var(--meadow); }
+  .hero-sub{
+    margin-top:26px;
+    display:flex; flex-wrap:wrap; gap:28px; align-items:center;
+    color:var(--parchment-dim);
+    font-size:15.5px;
+    opacity:0;
+    animation: riseIn 1s var(--ease) forwards;
+    animation-delay:.9s;
+  }
+  .hero-sub strong{ color:var(--parchment); font-weight:600; }
+  .hero-sub .divider{ width:5px; height:5px; border-radius:50%; background:var(--bark); }
+  .hero-actions{
+    margin-top:44px;
+    display:flex; gap:18px; flex-wrap:wrap;
+    opacity:0;
+    animation: riseIn 1s var(--ease) forwards;
+    animation-delay:1.1s;
+  }
+  @keyframes riseIn{
+    from{ opacity:0; transform:translateY(22px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:16px 30px;
+    border-radius:999px;
+    font-family:'Karla', sans-serif;
+    font-size:15px;
+    font-weight:600;
+    text-decoration:none;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition: transform .35s var(--ease), background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease);
+  }
+  .btn-primary{ background:var(--meadow); color:var(--pine-deep); }
+  .btn-primary:hover{ transform:translateY(-3px); background:var(--parchment); }
+  .btn-ghost{ background:transparent; color:var(--parchment); border-color:rgba(243,236,218,0.4); }
+  .btn-ghost:hover{ border-color:var(--parchment); transform:translateY(-3px); }
+  .btn i{ font-size:13px; transition:transform .35s var(--ease); }
+  .btn:hover i{ transform:translateX(3px); }
+
+  .frond-divider{
+    position:relative; z-index:3;
+    display:block; width:100%; height:auto;
+    margin-top:-2px;
+  }
+
+  /* ---------- Section basics ---------- */
+  section{ position:relative; }
+  .section-pad{ padding:130px 0; }
+  @media (max-width:720px){ .section-pad{ padding:88px 0; } }
+  .eyebrow{
+    display:flex; align-items:center; gap:12px;
+    font-size:14px;
+    color:var(--bark-deep);
+    margin-bottom:18px;
+  }
+  .eyebrow .rule{ width:30px; height:1px; background:var(--bark-deep); }
+  .on-dark .eyebrow{ color:var(--meadow); }
+  .on-dark .eyebrow .rule{ background:var(--meadow); }
+
+  h2.headline{ font-size:clamp(2.1rem, 4vw, 3.1rem); max-width:16ch; }
+  .lede{ font-size:18px; max-width:56ch; color:rgba(32,27,18,0.78); margin-top:20px; }
+  .on-dark .lede{ color:rgba(243,236,218,0.78); }
+  .on-dark h2, .on-dark h3, .on-dark h4, .on-dark p, .on-dark span{ color:var(--parchment); }
+
+  /* ---------- The Land (story) ---------- */
+  .land{ background:var(--parchment); overflow:hidden; }
+  .land-grid{
+    display:grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap:64px;
+    align-items:center;
+  }
+  .land-photos{ position:relative; height:560px; }
+  .land-photos img{
+    position:absolute;
+    border-radius:6px;
+    object-fit:cover;
+    box-shadow:var(--shadow);
+  }
+  .land-photo-a{ width:78%; height:78%; top:0; left:0; z-index:1; }
+  .land-photo-b{
+    width:52%; height:46%; bottom:0; right:0; z-index:2;
+    border:6px solid var(--parchment);
+  }
+  .land-badge{
+    position:absolute; z-index:3; top:8%; right:-6%;
+    background:var(--fern); color:var(--parchment);
+    border-radius:50%;
+    width:118px; height:118px;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    font-family:'Fraunces', serif;
+    font-size:13px;
+    line-height:1.25;
+    box-shadow:var(--shadow);
+    transform:rotate(-8deg);
+  }
+  .land-badge strong{ display:block; font-size:26px; font-weight:600; }
+
+  .land-text .lede{ margin-top:22px; }
+  .land-text p + p{ margin-top:16px; }
+  .who-lives{
+    margin-top:34px;
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+  .who-chip{
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:8px 16px;
+    font-size:13.5px;
+    color:var(--ink);
+    background:rgba(255,255,255,0.4);
+  }
+
+  @media (max-width:900px){
+    .land-grid{ grid-template-columns:1fr; }
+    .land-photos{ height:400px; margin-bottom:20px; }
+    .land-badge{ right:6%; }
+  }
+
+  /* ---------- Trail marks / badges strip ---------- */
+  .badges-strip{
+    background:var(--pine);
+    padding:46px 0;
+    overflow:hidden;
+    border-top:1px solid rgba(243,236,218,0.1);
+    border-bottom:1px solid rgba(243,236,218,0.1);
+  }
+  .badges-track{
+    display:flex; gap:64px;
+    width:max-content;
+    animation: scrollBadges 26s linear infinite;
+  }
+  .badges-strip:hover .badges-track{ animation-play-state:paused; }
+  @keyframes scrollBadges{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+  .badge-item{
+    display:flex; align-items:center; gap:14px;
+    color:var(--parchment-dim);
+    white-space:nowrap;
+    font-size:15px;
+  }
+  .badge-item i{ font-size:17px; width:20px; text-align:center; color:var(--meadow); flex-shrink:0; }
+  .badge-item b{ color:var(--parchment); font-weight:600; }
+
+  /* ---------- Seasons ---------- */
+  .seasons{ background:var(--parchment); }
+  .season-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-top:56px;
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .season-card{
+    background:var(--parchment);
+    padding:36px 28px;
+    transition:background .4s var(--ease);
+  }
+  .season-card:hover{ background:#fff; }
+  .season-card .fruit{
+    width:52px; height:52px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px;
+    color:var(--parchment);
+    font-size:20px;
+  }
+  .season-card .fruit-blackberry{ background:#4B3766; }
+  .season-card .fruit-cherry{ background:#A23B3B; }
+  .season-card .fruit-apple{ background:var(--fern); }
+  .season-card .fruit-salmonberry{ background:var(--bark); }
+  .season-card h4{ font-size:17px; margin-bottom:8px; font-weight:600; }
+  .season-card p{ font-size:14px; color:rgba(32,27,18,0.68); }
+  @media (max-width:820px){ .season-grid{ grid-template-columns:repeat(2,1fr); } }
+
+  .wildlife-row{
+    margin-top:64px;
+    display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap;
+  }
+  .wildlife-list{ display:flex; flex-wrap:wrap; gap:12px; max-width:640px; }
+  .wildlife-chip{
+    font-size:13.5px; padding:9px 16px; border-radius:999px;
+    background:var(--fern); color:var(--parchment);
+  }
+
+  /* ---------- Sites (masonry) ---------- */
+  .sites{ background:var(--pine-deep); }
+  .sites-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap; }
+  .site-filter-note{ color:var(--parchment-dim); font-size:14.5px; max-width:34ch; }
+
+  .masonry{
+    margin-top:60px;
+    columns:3 320px;
+    column-gap:26px;
+  }
+  @media (max-width:760px){ .masonry{ columns:1; } }
+  .site-card{
+    break-inside:avoid;
+    margin-bottom:26px;
+    position:relative;
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--pine);
+    box-shadow:0 18px 40px -18px rgba(0,0,0,0.55);
+  }
+  .site-card .imgwrap{ position:relative; overflow:hidden; }
+  .site-card img{
+    width:100%;
+    display:block;
+    transition:transform .7s var(--ease);
+  }
+  .site-card.tall .imgwrap{ aspect-ratio:4/5; }
+  .site-card.tall img{ height:100%; object-fit:cover; }
+  .site-card.wide .imgwrap{ aspect-ratio:16/10; }
+  .site-card.wide img{ height:100%; object-fit:cover; }
+  .site-card:hover img{ transform:scale(1.07); }
+
+  .site-card .top-tag{
+    position:absolute; top:14px; left:14px; z-index:2;
+    background:rgba(20,35,26,0.75);
+    color:var(--meadow);
+    font-size:12px;
+    padding:6px 12px;
+    border-radius:999px;
+    backdrop-filter:blur(4px);
+  }
+  .site-card .rating-tag{
+    position:absolute; top:14px; right:14px; z-index:2;
+    background:var(--parchment);
+    color:var(--pine-deep);
+    font-size:12px;
+    font-weight:700;
+    padding:6px 11px;
+    border-radius:999px;
+  }
+  .site-card .info{
+    padding:20px 22px 22px;
+  }
+  .site-card h3{ color:var(--parchment); font-size:21px; margin-bottom:8px; }
+  .site-card .meta{ color:var(--meadow); font-size:13px; }
+
+  .site-card .hover-panel{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    padding:20px 18px 18px;
+    background:linear-gradient(0deg, rgba(10,16,11,0.96) 45%, rgba(10,16,11,0.05));
+    transform:translateY(100%);
+    transition:transform .45s var(--ease);
+    will-change:transform;
+    pointer-events:none;
+  }
+  .site-card:hover .hover-panel,
+  .site-card:focus-within .hover-panel{
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+  .site-card .hover-panel .desc{
+    color:rgba(243,236,218,0.86);
+    font-size:13.5px;
+    line-height:1.55;
+    margin:0;
+  }
+  .site-card .amenities{
+    display:flex; flex-wrap:wrap; gap:8px;
+    margin-top:14px;
+  }
+  .site-card .amenities span{
+    font-size:11.5px;
+    color:var(--parchment-dim);
+    border:1px solid rgba(243,236,218,0.25);
+    padding:5px 10px;
+    border-radius:999px;
+  }
+  .site-card .reveal-hint{
+    display:flex; align-items:center; gap:7px;
+    margin-top:14px;
+    font-size:12.5px;
+    color:var(--bark);
+    transition:opacity .3s var(--ease);
+  }
+  .site-card .reveal-hint i{ font-size:11px; }
+  .site-card:hover .reveal-hint{ opacity:0; }
+
+  /* ---------- Nearby ---------- */
+  .nearby{ background:var(--parchment); }
+  .trail-map{
+    margin-top:70px;
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:0;
+  }
+  .trail-map::before{
+    content:"";
+    position:absolute;
+    top:11px; left:6%; right:6%;
+    height:2px;
+    background-image:linear-gradient(to right, var(--bark) 55%, transparent 0%);
+    background-size:14px 2px;
+    background-repeat:repeat-x;
+  }
+  .trail-stop{ position:relative; padding-right:20px; }
+  .trail-stop .marker{
+    width:24px; height:24px; border-radius:50%;
+    background:var(--parchment);
+    border:2px solid var(--bark);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif;
+    font-size:12px;
+    font-weight:600;
+    color:var(--bark-deep);
+    position:relative; z-index:1;
+    margin-bottom:24px;
+    transition: background .35s var(--ease), color .35s var(--ease);
+  }
+  .trail-stop:hover .marker{ background:var(--bark); color:var(--parchment); }
+  .trail-stop .time{ font-size:12.5px; color:var(--bark-deep); margin-bottom:6px; display:block; }
+  .trail-stop h4{ font-size:18px; margin-bottom:8px; }
+  .trail-stop p{ font-size:14px; color:rgba(32,27,18,0.7); }
+  @media (max-width:860px){
+    .trail-map{ grid-template-columns:1fr; gap:34px; }
+    .trail-map::before{ display:none; }
+  }
+
+  /* ---------- Journal / reviews ---------- */
+  .journal{ background:var(--fern); overflow:hidden; }
+  .journal-head{ display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px; }
+  .journal-stats{ display:flex; gap:36px; }
+  .journal-stat b{ font-family:'Fraunces', serif; font-size:32px; display:block; color:var(--parchment); }
+  .journal-stat span{ font-size:13px; color:rgba(243,236,218,0.75); }
+
+  .journal-scroll{
+    margin-top:56px;
+    display:flex;
+    gap:24px;
+    overflow-x:auto;
+    padding-bottom:20px;
+    scroll-snap-type:x proximity;
+    -webkit-overflow-scrolling:touch;
+  }
+  .journal-scroll::-webkit-scrollbar{ height:6px; }
+  .journal-scroll::-webkit-scrollbar-thumb{ background:rgba(243,236,218,0.35); border-radius:10px; }
+  .postcard{
+    flex:0 0 300px;
+    scroll-snap-align:start;
+    background:var(--parchment);
+    color:var(--ink);
+    border-radius:8px;
+    padding:28px 26px;
+    box-shadow:0 20px 40px -16px rgba(0,0,0,0.35);
+    transition:transform .4s var(--ease);
+  }
+  .postcard:nth-child(odd){ transform:rotate(-1.4deg); }
+  .postcard:nth-child(even){ transform:rotate(1.2deg); margin-top:22px; }
+  .postcard:hover{ transform:rotate(0deg) translateY(-6px); }
+  .postcard .site-tag{ font-size:12px; color:var(--bark-deep); margin-bottom:14px; display:block; }
+  .postcard p{ font-size:15px; line-height:1.6; color:var(--ink); }
+  .postcard .who{ margin-top:18px; display:flex; align-items:center; gap:10px; }
+  .postcard .who .initial{
+    width:32px; height:32px; border-radius:50%;
+    background:var(--fern); color:var(--parchment);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif; font-size:14px;
+  }
+  .postcard .who span{ font-size:13px; color:rgba(32,27,18,0.65); }
+
+  /* ---------- Host ---------- */
+  .host{ background:var(--pine); }
+  .host-inner{
+    display:flex; align-items:center; gap:36px; flex-wrap:wrap;
+    justify-content:space-between;
+  }
+  .host-who{ display:flex; align-items:center; gap:22px; }
+  .host-who img{
+    width:76px; height:76px; border-radius:50%;
+    object-fit:cover; border:3px solid var(--meadow);
+  }
+  .host-who h4{ color:var(--parchment); font-size:22px; }
+  .host-who p{ color:var(--parchment-dim); font-size:14px; margin-top:4px; }
+  .host-facts{ display:flex; gap:40px; }
+  .host-facts div b{ display:block; color:var(--parchment); font-family:'Fraunces', serif; font-size:20px; }
+  .host-facts div span{ color:rgba(243,236,218,0.65); font-size:12.5px; }
+
+  /* ---------- Reserve / form ---------- */
+  .reserve{ background:var(--parchment); }
+  .reserve-grid{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:0;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .reserve-info{
+    background:var(--pine);
+    color:var(--parchment);
+    padding:56px 48px;
+    position:relative;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(169,199,124,0.14), transparent 55%);
+  }
+  .reserve-info .price{ margin-top:26px; display:flex; align-items:baseline; gap:8px; }
+  .reserve-info .price b{ font-family:'Fraunces', serif; font-size:44px; }
+  .reserve-info .price span{ font-size:14px; color:var(--parchment-dim); }
+  .reserve-info ul{ list-style:none; padding:0; margin:32px 0 0; display:flex; flex-direction:column; gap:14px; }
+  .reserve-info ul li{ display:flex; gap:12px; font-size:14.5px; color:rgba(243,236,218,0.85); align-items:flex-start; }
+  .reserve-info ul li i{ font-size:14px; width:17px; text-align:center; flex-shrink:0; margin-top:3px; color:var(--meadow); }
+  .reserve-info .site-chip-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:30px; }
+  .reserve-info .site-chip{
+    font-size:12px; padding:6px 12px; border-radius:999px;
+    border:1px solid rgba(243,236,218,0.3); color:var(--parchment-dim);
+  }
+
+  .reserve-form{
+    background:#fff;
+    padding:56px 48px;
+  }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .field{ margin-bottom:20px; }
+  .field label{
+    display:block; font-size:13px; font-weight:600;
+    margin-bottom:8px; color:var(--ink);
+  }
+  .field input, .field select, .field textarea{
+    width:100%;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    padding:13px 14px;
+    font-family:'Karla', sans-serif;
+    font-size:14.5px;
+    color:var(--ink);
+    background:var(--parchment);
+    transition:border-color .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .field textarea{ resize:vertical; min-height:96px; }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none;
+    border-color:var(--fern);
+    box-shadow:0 0 0 4px rgba(63,90,52,0.14);
+  }
+  .field.invalid input, .field.invalid select{ border-color:#B0402F; }
+  .field .err{ font-size:12px; color:#B0402F; margin-top:6px; display:none; }
+  .field.invalid .err{ display:block; }
+
+  .submit-row{ display:flex; align-items:center; gap:18px; margin-top:8px; }
+  .btn-submit{
+    background:var(--fern);
+    color:var(--parchment);
+    border:none;
+    border-radius:999px;
+    padding:16px 34px;
+    font-family:'Karla', sans-serif;
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+    transition:background .35s var(--ease), transform .35s var(--ease);
+    display:inline-flex; align-items:center; gap:10px;
+  }
+  .btn-submit:hover{ background:var(--fern-light); transform:translateY(-2px); }
+  .form-note{ font-size:12.5px; color:rgba(32,27,18,0.55); }
+
+  .success-panel{
+    display:none;
+    text-align:center;
+    padding:40px 10px;
+  }
+  .success-panel i{ font-size:46px; color:var(--fern); margin-bottom:18px; display:inline-block; }
+  .success-panel h3{ font-size:26px; margin-bottom:10px; }
+  .success-panel p{ color:rgba(32,27,18,0.68); max-width:38ch; margin-inline:auto; }
+
+  @media (max-width:920px){
+    .reserve-grid{ grid-template-columns:1fr; }
+    .form-row{ grid-template-columns:1fr; }
+    .reserve-info, .reserve-form{ padding:40px 26px; }
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--pine-deep);
+    color:rgba(243,236,218,0.6);
+    padding:56px 0 32px;
+  }
+  .footer-top{
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:24px;
+    padding-bottom:32px;
+    border-bottom:1px solid rgba(243,236,218,0.12);
+  }
+  .footer-top .brand{ color:var(--parchment); }
+  .footer-links{ display:flex; gap:28px; flex-wrap:wrap; }
+  .footer-links a{ text-decoration:none; color:rgba(243,236,218,0.65); font-size:14px; }
+  .footer-links a:hover{ color:var(--meadow); }
+  .footer-bottom{
+    padding-top:26px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    font-size:12.5px;
+  }
+
+  /* reveal-on-scroll (subtle, once) */
+  .reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  ::-moz-selection{ background:var(--meadow); color:var(--pine-deep); }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:2.5px solid var(--bark);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Trail navigation -->
+<nav class="trail-nav" id="trailNav" aria-label="Page sections">
+  <button data-target="#hero" class="active"><span class="dot"></span><span class="label">Home</span></button>
+  <button data-target="#land"><span class="dot"></span><span class="label">The Land</span></button>
+  <button data-target="#sites"><span class="dot"></span><span class="label">Sites</span></button>
+  <button data-target="#nearby"><span class="dot"></span><span class="label">Nearby</span></button>
+  <button data-target="#journal"><span class="dot"></span><span class="label">Journal</span></button>
+  <button data-target="#reserve"><span class="dot"></span><span class="label">Reserve</span></button>
+</nav>
+
+<!-- Top bar -->
+<header class="topbar" id="topbar">
+  <div class="container">
+    <div class="brand">
+      <i class="fa-solid fa-seedling"></i>
+      Fern Gully Camp
+    </div>
+    <nav>
+      <a href="#land">The Land</a>
+      <a href="#sites">Sites</a>
+      <a href="#nearby">Nearby</a>
+      <a href="#journal">Journal</a>
+    </nav>
+    <a href="#reserve" class="cta-small">Check availability</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-media" role="img" aria-label="Sunlit forest clearing at Fern Gully Camp"></div>
+  <div class="hero-content container">
+    <div class="hero-eyebrowline"><span class="rule"></span> Greenbank &middot; Whidbey Island &middot; Washington</div>
+    <h1>Fifteen acres of<br><em>fern, farm &amp; forest.</em></h1>
+    <div class="hero-sub">
+      <span><strong>7 sites</strong> &mdash; tent &amp; RV</span>
+      <span class="divider"></span>
+      <span><strong>96%</strong> of 370 stays recommended</span>
+      <span class="divider"></span>
+      <span>Hosted by <strong>Erin</strong> since 2019</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#reserve" class="btn btn-primary">Check availability <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="#land" class="btn btn-ghost">Meet the land</a>
+    </div>
+  </div>
+  <svg class="frond-divider" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,64 C180,20 320,88 500,56 C680,24 800,86 980,52 C1160,18 1300,80 1440,48 L1440,90 L0,90 Z" fill="#F3ECDA"/>
+  </svg>
+</section>
+
+<!-- The Land -->
+<section class="land section-pad" id="land">
+  <div class="container">
+    <div class="land-grid">
+      <div class="land-photos reveal">
+        <img class="land-photo-a" src="https://hipcamp-res.cloudinary.com/images/f_auto,c_limit,w_1600,q_auto/v1564591002/campground-photos/qqhwcvvjjbubiciofhbh/fern-gully-camp-site-2-fern-gully-puget-sound.jpg" alt="Open pasture with the farmhouse in the distance">
+        <img class="land-photo-b" src="https://hipcamp-res.cloudinary.com/images/f_auto,c_limit,w_1200,q_auto/v1564592238/campground-photos/too3sysilqt5qnxyocp1/fern-gully-camp-fern-gully-puget-sound.jpg" alt="Outdoor soaking tub tucked in the trees">
+        <div class="land-badge"><strong>15</strong>acres to<br>wander</div>
+      </div>
+      <div class="land-text reveal">
+        <div class="eyebrow"><span class="rule"></span>The land</div>
+        <h2 class="headline">A horse farm, reimagined for tents</h2>
+        <p class="lede">Fern Gully was a working horse farm before it became a Hipcamp. Erin now shares the land with her boyfriend Dave and her mother Lauren, who both live on the property &mdash; her sister Morgan has since moved on to Texas, but the farm carries on.</p>
+        <p>Across the 15 acres, guests find quiet campsites folded into the forest and open pasture, plus a stargazing hammock circle for evenings when the sky clears over Puget Sound. The family spends most days outdoors &mdash; fixing fences, tending the fields, or simply lying in the hammocks &mdash; and they're always happy to point you toward the best blueberry stand in Freeland or a good night of live music at Mutiny Bay Blues.</p>
+        <div class="who-lives">
+          <span class="who-chip">Erin &middot; host</span>
+          <span class="who-chip">Dave</span>
+          <span class="who-chip">Lauren &middot; Erin's mother</span>
+          <span class="who-chip">Farm dogs on patrol</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Badges strip -->
+<section class="badges-strip">
+  <div class="badges-track">
+    <span class="badge-item"><i class="fa-solid fa-eye"></i><b>Amazing views</b> &mdash; guests say the sightlines here are hard to beat</span>
+    <span class="badge-item"><i class="fa-solid fa-people-group"></i><b>Family-friendly</b> &mdash; wide open field for kids and dogs to roam</span>
+    <span class="badge-item"><i class="fa-solid fa-shield-halved"></i><b>Staff verified</b> &mdash; accuracy checked on the ground by Hipcamp</span>
+    <span class="badge-item"><i class="fa-solid fa-heart"></i><b>Romantic</b> &mdash; recent campers call it a favorite for two</span>
+    <!-- duplicate for seamless loop -->
+    <span class="badge-item"><i class="fa-solid fa-eye"></i><b>Amazing views</b> &mdash; guests say the sightlines here are hard to beat</span>
+    <span class="badge-item"><i class="fa-solid fa-people-group"></i><b>Family-friendly</b> &mdash; wide open field for kids and dogs to roam</span>
+    <span class="badge-item"><i class="fa-solid fa-shield-halved"></i><b>Staff verified</b> &mdash; accuracy checked on the ground by Hipcamp</span>
+    <span class="badge-item"><i class="fa-solid fa-heart"></i><b>Romantic</b> &mdash; recent campers call it a favorite for two</span>
+  </div>
+</section>
+
+<!-- Seasons & wildlife -->
+<section class="seasons section-pad">
+  <div class="container">
+    <div class="eyebrow"><span class="rule"></span>What's in season</div>
+    <h2 class="headline">The farm ripens from July to September</h2>
+    <p class="lede">Wild fruit lines the trails to every campsite &mdash; pick as you wander, and leave enough for the birds.</p>
+    <div class="season-grid">
+      <div class="season-card reveal"><span class="fruit fruit-blackberry"><i class="fa-solid fa-leaf"></i></span><h4>Blackberries</h4><p>Thick along the fence lines by late summer &mdash; the reason many guests bring a container.</p></div>
+      <div class="season-card reveal"><span class="fruit fruit-cherry"><i class="fa-solid fa-leaf"></i></span><h4>Cherries</h4><p>Early-season fruit near the farmhouse and upper pasture.</p></div>
+      <div class="season-card reveal"><span class="fruit fruit-apple"><i class="fa-solid fa-apple-whole"></i></span><h4>Apples</h4><p>Old farm trees still bearing fruit from the property's horse-farm days.</p></div>
+      <div class="season-card reveal"><span class="fruit fruit-salmonberry"><i class="fa-solid fa-leaf"></i></span><h4>Salmonberries</h4><p>Native berries in the wooded sites &mdash; sites 2 and 3 see them first.</p></div>
+    </div>
+    <div class="wildlife-row reveal">
+      <div>
+        <div class="eyebrow"><span class="rule"></span>Who you might meet</div>
+        <div class="wildlife-list">
+          <span class="wildlife-chip">Bald eagles</span>
+          <span class="wildlife-chip">Red-tailed hawks</span>
+          <span class="wildlife-chip">Barn swallows</span>
+          <span class="wildlife-chip">Quail &amp; chicks</span>
+          <span class="wildlife-chip">Deer</span>
+          <span class="wildlife-chip">Coyotes, at a distance</span>
+        </div>
+      </div>
+      <p style="max-width:28ch; font-size:14px; color:rgba(32,27,18,0.6);">Deer and the occasional coyote pass through the fields &mdash; both keep well clear of camp.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Sites -->
+<section class="sites section-pad" id="sites">
+  <div class="container">
+    <div class="sites-head on-dark">
+      <div>
+        <div class="eyebrow"><span class="rule"></span>Select a site</div>
+        <h2 class="headline">Seven ways to camp one farm</h2>
+      </div>
+      <p class="site-filter-note">From tucked-away walk-ins under the trees to an open field built for RVs &mdash; hover a card for the full picture.</p>
+    </div>
+
+    <div class="masonry">
+
+      <div class="site-card tall reveal">
+        <div class="imgwrap">
+          <span class="top-tag">Tent &middot; sleeps 6</span>
+          <span class="rating-tag">96%</span>
+          <img src="https://hipcamp-res.cloudinary.com/images/f_auto,c_limit,w_1200,q_auto/v1560035482/campground-photos/fhxvjn8zorgmrrae6hnr/fern-gully-camp-site-1-fern-gully-puget-sound.jpg" alt="Site 1, edge of the pasture and alder woods">
+        <div class="hover-panel">
+            <p class="desc">Sits between the grazing pasture and the alder woods &mdash; an easy pitch with room for two cars. A connecting path through the woods links it to Site 5 for larger groups booking both.</p>
+          <div class="amenities"><span>Toilet</span><span>Potable water</span><span>Showers</span><span>Pets OK</span></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>Site 1 &mdash; Fern Gully</h3>
+          <div class="meta">107 reviews &middot; parking for 2 cars</div>
+          <div class="reveal-hint"><i class="fa-solid fa-arrows-up-down-left-right"></i> Hover for details</div>
+        </div>
+      </div>
+
+      <div class="site-card wide reveal">
+        <div class="imgwrap">
+          <span class="top-tag">Tent &middot; sleeps 8</span>
+          <span class="rating-tag">97%</span>
+          <img src="https://hipcamp-res.cloudinary.com/images/f_auto,c_limit,w_1200,q_auto/v1564592289/campground-photos/q0j8j6umlhneflhapzfq/fern-gully-camp-site-4-fern-gully-puget-sound.jpg" alt="Site 4, private woodland site">
+        <div class="hover-panel">
+            <p class="desc">Separated from its neighbors by forest and a gully &mdash; about a 200-foot uphill walk from parking to a flat clearing in the trees. Farthest from the bathhouse, but campers say it's worth it.</p>
+          <div class="amenities"><span>Toilet</span><span>Potable water</span><span>Showers</span><span>Pets OK</span></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>Site 4 &mdash; Fern Gully</h3>
+          <div class="meta">102 reviews &middot; our most private site</div>
+          <div class="reveal-hint"><i class="fa-solid fa-arrows-up-down-left-right"></i> Hover for details</div>
+        </div>
+      </div>
+
+      <div class="site-card tall reveal">
+        <div class="imgwrap">
+          <span class="top-tag">Tent &middot; sleeps 8</span>
+          <span class="rating-tag">95%</span>
+          <img src="https://hipcamp-res.cloudinary.com/images/f_auto,c_limit,w_1200,q_auto/v1660339913/campground-photos/baejntpzbpg5vclmfbqu/fern-gully-camp-site-2-fern-gully-puget-sound.jpg" alt="Site 2, forest edge with farmhouse views">
+        <div class="hover-panel">
+            <p class="desc">Hugs the edge of the evergreen forest, just outside the tree line, with a view over the farmhouse and fields. Native pie and salmon berries ripen here first in early summer.</p>
+          <div class="amenities"><span>Toilet</span><span>Potable water</span><span>Showers</span><span>Pets OK</span></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>Site 2 &mdash; Fern Gully</h3>
+          <div class="meta">87 reviews &middot; sun and a view of the farm</div>
+          <div class="reveal-hint"><i class="fa-solid fa-arrows-up-down-left-right"></i> Hover for details</div>
+        </div>
+      </div>
+
+      <div class="site-card wide reveal">
+        <div class="imgwrap">
+          <span class="top-tag">Tent &middot; sleeps 6 &middot; walk-in</span>
+          <span class="rating-tag">97%</span>
+          <img src="https://hipcamp-res.cloudinary.com/images/f_auto,c_limit,w_1200,q_auto/v1564592293/campground-photos/s669mljpjr43tch5vgum/fern-gully-camp-site-3-fern-gully-puget-sound.jpg" alt="Site 3, walk-in site among moss and ferns">
+        <div class="hover-panel">
+            <p class="desc">A short walk in over one small hill, then total quiet &mdash; rest in a hammock among moss and birdsong. Great Horned Owls are regular company after dark.</p>
+          <div class="amenities"><span>Toilet</span><span>Potable water</span><span>Showers</span><span>Pets OK</span></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>Site 3 &mdash; Fern Gully</h3>
+          <div class="meta">84 reviews &middot; a wagon is on loan for gear</div>
+          <div class="reveal-hint"><i class="fa-solid fa-arrows-up-down-left-right"></i> Hover for details</div>
+        </div>
+      </div>
+
+      <div class="site-card tall reveal">
+        <div class="imgwrap">
+          <span class="top-tag">Tent &middot; sleeps 8 &middot; walk-in</span>
+          <span class="rating-tag">96%</span>
+          <img src="https://hipcamp-res.cloudinary.com/images/f_auto,c_limit,w_1200,q_auto/v1589761594/campground-photos/emxgfuuftifkejrlwsof/fern-gully-camp-site-5-fern-gully-puget-sound.jpg" alt="Site 5, tucked among tall trees">
+        <div class="hover-panel">
+            <p class="desc">Tucked deep among tall trees with plenty of room for multiple tents. The walk in crosses a small stream &mdash; borrow the wagon if you're hauling a lot of gear.</p>
+          <div class="amenities"><span>Toilet</span><span>Potable water</span><span>Showers</span><span>Pets OK</span></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>Site 5 &mdash; Fern Gully</h3>
+          <div class="meta">68 reviews &middot; a longtime favorite</div>
+          <div class="reveal-hint"><i class="fa-solid fa-arrows-up-down-left-right"></i> Hover for details</div>
+        </div>
+      </div>
+
+      <div class="site-card wide reveal">
+        <div class="imgwrap">
+          <span class="top-tag">Tent &middot; open field</span>
+          <span class="rating-tag">95%</span>
+          <img src="https://hipcamp-res.cloudinary.com/images/f_auto,c_limit,w_1200,q_auto/v1689566107/campground-photos/bnchfltss3au8bongduo/fern-gully-camp-site-6-flat-field-puget-sound.jpg" alt="Site 6, open flat field">
+        <div class="hover-panel">
+            <p class="desc">A wide, open field well suited to camper vans and dry-camping RVs, close to the toilet and bathhouse. Less shade than the wooded sites, but the easiest walk of all.</p>
+          <div class="amenities"><span>Toilet</span><span>Potable water</span><span>Showers</span><span>Pets OK</span></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>Site 6 &mdash; Flat Field</h3>
+          <div class="meta">21 reviews &middot; sleeps 8</div>
+          <div class="reveal-hint"><i class="fa-solid fa-arrows-up-down-left-right"></i> Hover for details</div>
+        </div>
+      </div>
+
+      <div class="site-card tall reveal">
+        <div class="imgwrap">
+          <span class="top-tag">RV/Tent &middot; sleeps 21</span>
+          <span class="rating-tag">90%</span>
+          <img src="https://hipcamp-res.cloudinary.com/f_auto,c_limit,w_1200,q_auto/v1750618426/dev-campground-photos/gtjagvrae06ihmfjsot8.jpg" alt="High Tide Hideout, covered gathering area">
+        <div class="hover-panel">
+            <p class="desc">Room for a crowd &mdash; a covered building for cooking and eating, a 41-inch fire pit, and open ground for several tents. No electrical or water hookup on site.</p>
+          <div class="amenities"><span>Toilet</span><span>Potable water</span><span>Pets OK</span></div>
+          </div>
+        </div>
+        <div class="info">
+          <h3>High Tide Hideout</h3>
+          <div class="meta">5 reviews &middot; vehicles under 12 ft</div>
+          <div class="reveal-hint"><i class="fa-solid fa-arrows-up-down-left-right"></i> Hover for details</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Nearby -->
+<section class="nearby section-pad" id="nearby">
+  <div class="container">
+    <div class="eyebrow"><span class="rule"></span>Beyond the fence line</div>
+    <h2 class="headline">A short drive in any direction</h2>
+    <p class="lede">Fern Gully sits near the middle of Whidbey Island, close enough to reach the coast, a farm stand, or dinner without losing the afternoon.</p>
+    <div class="trail-map">
+      <div class="trail-stop reveal">
+        <div class="marker">2m</div>
+        <span class="time">2-minute drive</span>
+        <h4>Greenbank Pantry</h4>
+        <p>Sandwiches, cold Topo Chico, and a decent bottle of wine for the fire.</p>
+      </div>
+      <div class="trail-stop reveal">
+        <div class="marker">4m</div>
+        <span class="time">4-minute drive</span>
+        <h4>Greenbank Farm</h4>
+        <p>A reliably good stop along Highway 525, worth building an afternoon around.</p>
+      </div>
+      <div class="trail-stop reveal">
+        <div class="marker">5m</div>
+        <span class="time">5-minute drive</span>
+        <h4>Lagoon Point County Park</h4>
+        <p>Good fishing and a solid chance of spotting whales offshore.</p>
+      </div>
+      <div class="trail-stop reveal">
+        <div class="marker">6m</div>
+        <span class="time">6-minute drive</span>
+        <h4>South Whidbey State Park</h4>
+        <p>Hiking trails that trace the coastline &mdash; bring the camera.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Journal / reviews -->
+<section class="journal section-pad on-dark" id="journal">
+  <div class="container">
+    <div class="journal-head">
+      <div>
+        <div class="eyebrow"><span class="rule"></span>From the guestbook</div>
+        <h2 class="headline">Notes left by other campers</h2>
+      </div>
+      <div class="journal-stats">
+        <div class="journal-stat"><b>96%</b><span>recommend this camp</span></div>
+        <div class="journal-stat"><b>370</b><span>written reviews</span></div>
+        <div class="journal-stat"><b>797</b><span>ratings overall</span></div>
+      </div>
+    </div>
+
+    <div class="journal-scroll">
+      <div class="postcard">
+        <span class="site-tag">Site 4 &middot; August 2026</span>
+        <p>Wonderfully spacious and private &mdash; the trees around us made it feel like our own corner of the property.</p>
+        <div class="who"><div class="initial">S</div><span>Shervin H.</span></div>
+      </div>
+      <div class="postcard">
+        <span class="site-tag">Site 1 &middot; August 2026</span>
+        <p>Morning sun, afternoon shade, and a barn shower with a nesting sparrow overhead. A quiet, peaceful spot rather than a windy beach one.</p>
+        <div class="who"><div class="initial">J</div><span>Jason M.</span></div>
+      </div>
+      <div class="postcard">
+        <span class="site-tag">Site 5 &middot; July 2026</span>
+        <p>Peaceful and surrounded by trees, with attentive hosts and a loaner wagon that made hauling our gear in painless.</p>
+        <div class="who"><div class="initial">A</div><span>Alexis O.</span></div>
+      </div>
+      <div class="postcard">
+        <span class="site-tag">High Tide Hideout &middot; August 2026</span>
+        <p>Plenty of room for our big group and several dogs, and a location that felt private despite the size of our party.</p>
+        <div class="who"><div class="initial">C</div><span>Caren P.</span></div>
+      </div>
+      <div class="postcard">
+        <span class="site-tag">Site 6 &middot; July 2026</span>
+        <p>Wide open and everyone respected each other's space &mdash; we'll be back the next time we're camping on the island.</p>
+        <div class="who"><div class="initial">S</div><span>Sydney D.</span></div>
+      </div>
+      <div class="postcard">
+        <span class="site-tag">Site 3 &middot; July 2026</span>
+        <p>Secluded and easy to reach from the parking area, with a hammock that made it hard to leave.</p>
+        <div class="who"><div class="initial">L</div><span>Leslie A.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Host -->
+<section class="host section-pad">
+  <div class="container">
+    <div class="host-inner">
+      <div class="host-who">
+        <img src="https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,h_200,w_200/v1738087484/profile/nxuzexpi9kf8ihcgeajz.jpg" alt="Erin, host of Fern Gully Camp">
+        <div>
+          <h4>Hosted by Erin N.</h4>
+          <p>On Hipcamp since June 2019</p>
+        </div>
+      </div>
+      <div class="host-facts">
+        <div><b>40%</b><span>response rate</span></div>
+        <div><b>~17 hrs</b><span>response time</span></div>
+        <div><b>15 acres</b><span>shared with guests</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reserve -->
+<section class="reserve section-pad" id="reserve">
+  <div class="container">
+    <div class="eyebrow"><span class="rule"></span>Reserve your ground</div>
+    <h2 class="headline">Tell us your dates &mdash; we'll find your site</h2>
+    <div class="reserve-grid" style="margin-top:52px;">
+
+      <div class="reserve-info">
+        <div class="eyebrow" style="color:var(--meadow);"><span class="rule" style="background:var(--meadow);"></span>Starting from</div>
+        <div class="price"><b>$44</b><span>per night, before fees</span></div>
+        <ul>
+          <li><i class="fa-solid fa-check"></i>Toilet, potable water and showers at every site</li>
+          <li><i class="fa-solid fa-check"></i>Pets welcome across the property</li>
+          <li><i class="fa-solid fa-check"></i>Exact address shared once your stay is confirmed</li>
+          <li><i class="fa-solid fa-check"></i>Typical host reply within 17 hours</li>
+        </ul>
+        <div class="site-chip-row">
+          <span class="site-chip">Site 1</span><span class="site-chip">Site 2</span><span class="site-chip">Site 3</span>
+          <span class="site-chip">Site 4</span><span class="site-chip">Site 5</span><span class="site-chip">Site 6</span>
+          <span class="site-chip">High Tide Hideout</span>
+        </div>
+      </div>
+
+      <div class="reserve-form">
+        <form id="bookingForm" novalidate>
+          <div class="form-row">
+            <div class="field" data-field="name">
+              <label for="fullName">Full name</label>
+              <input type="text" id="fullName" name="fullName" placeholder="Jamie Rivera" autocomplete="name">
+              <div class="err">Please tell us your name.</div>
+            </div>
+            <div class="field" data-field="email">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="jamie@email.com" autocomplete="email">
+              <div class="err">Please enter a valid email.</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field" data-field="checkin">
+              <label for="checkin">Arrival</label>
+              <input type="date" id="checkin" name="checkin">
+              <div class="err">Choose an arrival date.</div>
+            </div>
+            <div class="field" data-field="checkout">
+              <label for="checkout">Departure</label>
+              <input type="date" id="checkout" name="checkout">
+              <div class="err">Choose a departure date.</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field" data-field="guests">
+              <label for="guests">Guests</label>
+              <select id="guests" name="guests">
+                <option value="">Select</option>
+                <option>1 guest</option>
+                <option>2 guests</option>
+                <option>3–4 guests</option>
+                <option>5–8 guests</option>
+                <option>9+ guests</option>
+              </select>
+              <div class="err">Let us know how many are coming.</div>
+            </div>
+            <div class="field" data-field="site">
+              <label for="site">Preferred site</label>
+              <select id="site" name="site">
+                <option value="">No preference</option>
+                <option>Site 1 — Fern Gully</option>
+                <option>Site 2 — Fern Gully</option>
+                <option>Site 3 — Fern Gully (walk-in)</option>
+                <option>Site 4 — Fern Gully (most private)</option>
+                <option>Site 5 — Fern Gully (walk-in)</option>
+                <option>Site 6 — Flat Field</option>
+                <option>High Tide Hideout — RV/Tent</option>
+              </select>
+            </div>
+          </div>
+          <div class="field" data-field="message">
+            <label for="message">Anything we should know?</label>
+            <textarea id="message" name="message" placeholder="Traveling with pets, celebrating something, need RV access — let us know."></textarea>
+          </div>
+          <div class="submit-row">
+            <button type="submit" class="btn-submit">Send request <i class="fa-solid fa-arrow-right"></i></button>
+            <span class="form-note">Erin usually replies within 17 hours.</span>
+          </div>
+        </form>
+
+        <div class="success-panel" id="successPanel">
+          <i class="fa-solid fa-circle-check"></i>
+          <h3>Your request is on its way</h3>
+          <p>Thanks — Erin will get back to you shortly to confirm your dates and site at Fern Gully Camp.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="brand">
+        <i class="fa-solid fa-seedling"></i>
+        Fern Gully Camp
+      </div>
+      <div class="footer-links">
+        <a href="#land">The Land</a>
+        <a href="#sites">Sites</a>
+        <a href="#nearby">Nearby</a>
+        <a href="#journal">Journal</a>
+        <a href="#reserve">Reserve</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Greenbank, Whidbey Island, Washington</span>
+      <span>Exact address shared after booking is confirmed</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Topbar background on scroll
+  const topbar = document.getElementById('topbar');
+  window.addEventListener('scroll', () => {
+    topbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive:true });
+
+  // Trail nav active state + on-light detection
+  const sections = ['#hero','#land','#sites','#nearby','#journal','#reserve'].map(id => document.querySelector(id));
+  const navButtons = document.querySelectorAll('.trail-nav button');
+  const trailNav = document.getElementById('trailNav');
+  const darkSections = new Set(['#hero','#sites','#journal']); // sections with dark backgrounds
+
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelector(btn.dataset.target).scrollIntoView({ behavior:'smooth' });
+    });
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = '#' + entry.target.id;
+        navButtons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+        trailNav.classList.toggle('on-light', !darkSections.has(id));
+      }
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  sections.forEach(s => s && io.observe(s));
+
+  // Reveal-on-scroll
+  const revealItems = document.querySelectorAll('.reveal');
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealIO.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealItems.forEach(el => revealIO.observe(el));
+
+  // Form validation + fake submit
+  const form = document.getElementById('bookingForm');
+  const successPanel = document.getElementById('successPanel');
+
+  function setInvalid(fieldEl, invalid){
+    fieldEl.classList.toggle('invalid', invalid);
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let valid = true;
+
+    const name = form.fullName.value.trim();
+    const nameField = form.querySelector('[data-field="name"]');
+    setInvalid(nameField, name.length < 2);
+    if (name.length < 2) valid = false;
+
+    const email = form.email.value.trim();
+    const emailField = form.querySelector('[data-field="email"]');
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    setInvalid(emailField, !emailOk);
+    if (!emailOk) valid = false;
+
+    const checkin = form.checkin.value;
+    const checkinField = form.querySelector('[data-field="checkin"]');
+    setInvalid(checkinField, !checkin);
+    if (!checkin) valid = false;
+
+    const checkout = form.checkout.value;
+    const checkoutField = form.querySelector('[data-field="checkout"]');
+    let checkoutInvalid = !checkout || (checkin && checkout <= checkin);
+    setInvalid(checkoutField, checkoutInvalid);
+    if (checkoutInvalid) valid = false;
+
+    const guests = form.guests.value;
+    const guestsField = form.querySelector('[data-field="guests"]');
+    setInvalid(guestsField, !guests);
+    if (!guests) valid = false;
+
+    if (!valid) {
+      const firstInvalid = form.querySelector('.invalid');
+      if (firstInvalid) firstInvalid.scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+
+    form.style.transition = 'opacity .35s ease';
+    form.style.opacity = '0';
+    setTimeout(() => {
+      form.style.display = 'none';
+      successPanel.style.display = 'block';
+      successPanel.style.opacity = '0';
+      requestAnimationFrame(() => {
+        successPanel.style.transition = 'opacity .5s ease';
+        successPanel.style.opacity = '1';
+      });
+    }, 350);
+  });
+
+  // Clear invalid state as user types/selects
+  form.querySelectorAll('input, select, textarea').forEach(el => {
+    el.addEventListener('input', () => {
+      const field = el.closest('.field');
+      if (field) field.classList.remove('invalid');
+    });
+  });
+</script>
+
+</body>
+</html>
